@@ -24,10 +24,10 @@ This article focuses on using Azure Virtual Desktop to move an on-premises RDS e
 Working closely with business partners, the Contoso IT team defines the business drivers for a VDI migration to Azure. These drivers might include:
 
 - **Current environment end-of-life:** A datacenter is out of capacity when it reaches the end of a lease or is closing down. Migrating to the cloud provides virtually unlimited capacity. Current software might also be reaching its end of life where it's become necessary to upgrade the software running Contoso's current VDI solution.
-- **Multi-session Windows 10 VDI:** Provide Contoso users with the only multi-session Windows 10 desktop virtualized in the cloud that's highly scalable, up to date, and available on any device.
+- **Multi-session Windows 11 VDI:** Provide Contoso users with the only multi-session Windows 11 desktop virtualized in the cloud that's highly scalable, up to date, and available on any device.
 - **Optimize for Microsoft 365 Apps for enterprise:** Deliver the best Microsoft 365 Apps for enterprise experience, with multi-session virtual desktop scenarios providing the most productive virtualized experience for Contoso's users.
 - **Deploy and scale in minutes:** Quickly virtualize and deploy modern and legacy desktop applications to the cloud in minutes with unified management in the Azure portal.
-- **Secure and productive on Azure and Microsoft 365:** Deploy a complete, intelligent solution that enhances creativity and collaboration for everyone. Shift to Microsoft 365 and get Office 365, Windows 10, and Enterprise Mobility + Security.
+- **Secure and productive on Azure and Microsoft 365:** Deploy a complete, intelligent solution that enhances creativity and collaboration for everyone. Shift to Microsoft 365 and get Office 365, Windows 11, and Enterprise Mobility + Security.
 
 ## RDS on-premises to Azure Virtual Desktop in the cloud goals
 
@@ -42,7 +42,7 @@ These goals support the decision to use Azure Virtual Desktop and validate it as
 
 ## Benefits of running Azure Virtual Desktop
 
-Using Azure Virtual Desktop, Contoso can now seamlessly run, manage, and scale its VDI solution quickly and easily. The company can also provide an optimized multi-session Windows 10 environment to its users.
+Using Azure Virtual Desktop, Contoso can now seamlessly run, manage, and scale its VDI solution quickly and easily. The company can also provide an optimized multi-session Windows 11 environment to its users.
 
 Contoso capitalizes on existing Microsoft 365 licenses while using the scale, performance, security, and innovation of Azure.
 
@@ -76,15 +76,15 @@ Contoso evaluates the proposed design by putting together a list of pros and con
 
 | Consideration | Details |
 | --- | --- |
-| **Pros** | Windows 10 Enterprise multi-session environment. <br><br> Cloud-based, allowing access from anywhere. <br><br> Take advantage of other Azure services like Azure Files within the Azure Virtual Desktop environment. <br><br> Optimized for the Microsoft modern desktop. |
-| **Cons** | To fully optimize for Azure, Contoso will have to rebuild Windows 10 images optimized for multiuser sessions. <br><br> Azure Virtual Desktop doesn't support user profile disks, so UPDs must be migrated to FSLogix profile containers. |
+| **Pros** | Windows 11 Enterprise multi-session environment. <br><br> Cloud-based, allowing access from anywhere. <br><br> Take advantage of other Azure services like Azure Files within the Azure Virtual Desktop environment. <br><br> Optimized for the Microsoft modern desktop. |
+| **Cons** | To fully optimize for Azure, Contoso will have to rebuild Windows 11 images optimized for multiuser sessions. <br><br> Azure Virtual Desktop doesn't support user profile disks, so UPDs must be migrated to FSLogix profile containers. |
 
 ## Migration process
 
 Contoso moves VMs to Azure Virtual Desktop by using the Lakeside assessment tool and Azure Migrate. Contoso needs to:
 
 - Run the assessment tool against its on-premises RDS infrastructure to establish the scale of the Azure Virtual Desktop deployment in Azure.
-- Migrate to Azure Virtual Desktop via either Windows 10 Enterprise multi-session or persistent virtual machines.
+- Migrate to Azure Virtual Desktop via either Windows 11 Enterprise multi-session or persistent virtual machines.
 - Optimize the Azure Virtual Desktop multi-session by scaling up and down as needed to manage costs.
 - Virtualize applications and assign users as needed to continue to secure and manage the Azure Virtual Desktop environment.
 
@@ -178,40 +178,9 @@ The data is analyzed by Contoso to determine the most cost-effective use of both
 > [!NOTE]
 > Contoso will also need to migrate application servers to Azure to get the company closer to the Azure Virtual Desktop environment and reduce network latency for its users.
 
-## Step 2: Create the Azure Virtual Desktop environment for pooled desktops
+## Step 2: Create the Azure Virtual Desktop environment with the AVD Landing Zone Accelerator
 
-Using the Azure portal, Contoso will create an Azure Virtual Desktop environment to use for pooled resources. Later, it will go through the migration steps to attach personal desktops to the same environment.
-
-1. Contoso selects the correct subscription, and creates a new Azure Virtual Desktop host pool.
-
-   :::image type="content" source="./media/contoso-migration-rds-to-wvd/azure-virtual-desktop-create-host-pool.png" alt-text="Screenshot that shows creating a host pool in Azure Virtual Desktop.":::
-  *Figure 12: A new Azure Virtual Desktop host pool.*
-
-1. Specify the subscription, resource group, and location. Then select the name for the host pool, host pool type, and max session limit. Desktop type is set to **Pooled** because Contoso is starting with a new shared environment for some of its users. Based on the personas of the users from the Lakeside assessment, Contoso sets the max session limit to **150**.
-
-   :::image type="content" source="./media/contoso-migration-rds-to-wvd/azure-virtual-desktop-host-pool-basics-tab.png" alt-text="Screenshot that shows the configuration for host pool basics.":::
-   *Figure 13: Prerequisites for configuring virtual machines.*
-
-1. Select **Next: Virtual Machines**, and then configure the virtual machines.
-
-   - Contoso configures the VM and chooses a custom size by selecting **Change size** or using the default.
-   - Azure Virtual Desktop is chosen as the VM name prefix for these pooled desktops.
-   - Because Contoso is creating the pooled servers to use the new Windows 10 Enterprise multi-session functionality for the virtual machine settings, leave the image source set to **Gallery**. This option enables Contoso to select the Windows 10 Enterprise multi-session image for the VMs.
-   - Other settings include the disk type, an Active Directory domain join UPN field, an admin password, an optional OU path to which machines are added, the virtual network, and a subnet for adding servers.
-
-   :::image type="content" source="./media/contoso-migration-rds-to-wvd/azure-virtual-desktop-create-host-pool-virtual-machines.png" alt-text="Screenshot that shows configuring the virtual machines." lightbox="./media/contoso-migration-rds-to-wvd/azure-virtual-desktop-create-host-pool-virtual-machines-lightbox.png":::
-   *Figure 14: Configuring virtual machines.*
-
-    > [!NOTE]
-    > Contoso can't create a new virtual network at this step. Before reaching this step, Contoso should have already created a virtual network that has access to Active Directory.
-    <!-- -->
-    > [!NOTE]
-    > Contoso can't use a user account that requires multifactor authentication in this step. If Contoso plans to use multifactor authentication for its users, it will need to create a service principal for this purpose.
-
-1. Contoso performs one more validation of the Azure Virtual Desktop settings, and creates the new environment of pooled Azure Virtual Desktop virtual machines.
-
-   :::image type="content" source="./media/contoso-migration-rds-to-wvd/azure-virtual-desktop-host-pool-review-create.png" alt-text="Screenshot that shows reviewing and creating virtual machines." lightbox="./media/contoso-migration-rds-to-wvd/azure-virtual-desktop-host-pool-review-create-lightbox.png":::
-   *Figure 15: Reviewing and creating virtual machines.*
+The Azure Virtual Desktop Landing Zone Accelerator is Microsoft's enterprise-ready solution that can be leveraged to deploy an end-to-end AVD environment, see [here](https://github.com/Azure/avdaccelerator).
 
 ## Step 3: Convert the UPDs to FSLogix profile containers
 
@@ -236,7 +205,7 @@ A roaming profile conversion:
 Convert-RoamingProfile -ProfilePath "C:\Users\User1" -Target "\\Server\FSLogixProfiles$" -VHDMaxSizeGB 20 -VHDLogicalSectorSize 512 -VHD -IncludeRobocopyDetails -LogPath C:\temp\Log.txt
 ```
 
-At this point, the migration has enabled using pooled resources with Windows 10 Enterprise multi-session. Contoso can begin to deploy the necessary applications to the users who will use Windows 10 Enterprise multi-session.
+At this point, the migration has enabled using pooled resources with Windows 11 Enterprise multi-session. Contoso can begin to deploy the necessary applications to the users who will use Windows 11 Enterprise multi-session.
 
 But now Contoso must migrate the persistent virtual machines to Azure.
 
@@ -291,7 +260,7 @@ For more information, see [Security best practices for IaaS workloads in Azure](
 
 ## Business continuity and disaster recovery
 
-For business continuity and disaster recovery (BCDR), Contoso backs up the data on the VMs by using Azure Backup to keep data safe. For more information, see [An overview of Azure VM backup](/azure/backup/backup-azure-vms-introduction).
+For business continuity and disaster recovery (BCDR), see [Multiregion BCDR for Azure Virtual Desktop](https://learn.microsoft.com/en-us/azure/architecture/example-scenario/wvd/azure-virtual-desktop-multi-region-bcdr).
 
 ### Licensing and cost optimization
 
