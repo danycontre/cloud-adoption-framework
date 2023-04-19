@@ -13,7 +13,10 @@ ms.custom: think-tank
 
 # Move on-premises Remote Desktop Services to Azure Virtual Desktop scenario
 
-This article focuses on using Azure Virtual Desktop to move an on-premises RDS environment to Azure. With Azure Virtual Desktop, you can bring your existing Remote Desktop Services (RDS) and Windows Server desktops and apps to any computer.
+This article focuses on using Azure Virtual Desktop to move an on-premises RDS environment to Azure. With Azure Virtual Desktop, you can bring your existing Remote Desktop Services (RDS) and Windows Server desktops and apps to any computer. 
+
+> [!NOTE]
+> This guidance will not apply for migrating from Citrix or VMWare Horizon.
 
 | Migration options | Outcome |
 |--- | --- |
@@ -218,7 +221,7 @@ The next step in the migration process for Contoso is to migrate its persistent 
    ![Screenshot of the Azure Migrate: Server Migration discover option.](./media/contoso-migration-rds-to-wvd/wvd-persistent-discover.png)
    *Figure 16: Discovering a server migration.*
 
-1. Contoso converts an appliance in its environment that's going to manage the replication of the machines to Azure Virtual Desktop. Ensure that the target region is set to **East US 2**, where the Azure Virtual Desktop environment was created.
+1. Contoso converts an appliance in its environment that's going to manage the replication of the machines to Azure Virtual Desktop. Ensure that the target region is set to **East US 2**, where the Azure Virtual Desktop environment was created. For full Azure Migrate OS Support matrix, see [Support Matrix for Hyper-V](https://learn.microsoft.com/en-us/azure/migrate/migrate-support-matrix-hyper-v-migration) and [Support Matrix for VMware vSphere](https://learn.microsoft.com/en-us/azure/migrate/migrate-support-matrix-vmware-migration).
 
    :::image type="content" source="./media/contoso-migration-rds-to-wvd/azure-migrate-discover-resources.png" alt-text="Screenshot that shows creating an appliance for managing the replication.":::
    *Figure 17: Converting an appliance.*
